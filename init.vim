@@ -5,8 +5,20 @@
 "|_|  |_|\__, |    \_/  |___|_|  |_|_| \_\\____|
 "        |___/                                  
 
+" Author: @why
+
+" Checkout-list
+" vim-esearch
+" fmoralesc/worldslice
+" SidOfc/mkdx
+" ====================
+" === Editor Setup ===
+" ====================
+" ===
+" === System
+" ===
 set runtimepath^=~/.vim runtimepath+=~/.vim/after
-let mapleader=" " "set the leader
+let mapleader=" "           "set the leader
 let &t_ut=''
 "colorscheme solarized
 "syntax on
@@ -16,23 +28,34 @@ filetype indent on
 filetype plugin on
 filetype plugin indent on
 
+set notimeout
+set t_Co=256
 set nu
 se cul
+set autochdir
 set ruler
 set wrap
 set wildmenu
+set hidden    "this allow you jump to another file without save the curren buffer
 set relativenumber
 set hlsearch
 set incsearch
 set ignorecase
 set scrolloff=5
-noremap n nzz
-noremap N Nzz
+set updatetime=100 "let your vim response faster"
 set fileencoding=utf-8
+set list
+set listchars=tab:\|\ ,trail:▫
 let &packpath = &runtimepath
 set mouse=a
-set updatetime=100
 set noswapfile
+set shiftwidth=4 "auto indent width for new line 
+set tabstop=4 "设置tab显示宽度为4
+set expandtab
+
+
+source ~/.config/nvim/keymap.vim
+
 if has("autocmd")
 	    autocmd BufRead *.txt set tw=78
 	        autocmd BufReadPost *
@@ -40,87 +63,72 @@ if has("autocmd")
 		    \   exe "normal g'\"" |
 		    \ endif
 	endif
-call plug#begin('~/.vim/plugged')
-Plug 'jiangmiao/auto-pairs'
+
+"install plugins via vim-plug
+call plug#begin('~/.config/nvim/plugged')
+"Plug 'jiangmiao/auto-pairs'
 Plug 'scrooloose/nerdtree'
 Plug 'mhinz/vim-startify'
-"Plug 'bling/vim-buffer-line'
 "status line && color
 Plug 'theniceboy/vim-deus'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'dracula/vim'
+Plug 'mg979/vim-xtabline'           "a status line on top show current path
 Plug 'connorholyday/vim-snazzy'
 Plug 'scrooloose/nerdcommenter' " in <space>cn to comment a line
-" python completion
-"Plug 'ncm2/ncm2'
 Plug 'roxma/nvim-yarp'
-"Plug 'ncm2/ncm2-jedi'
-"Plug 'ncm2/ncm2-bufword'
-"Plug 'ncm2/ncm2-path'
 
 "Auto complete
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'tpope/vim-surround' " type yskw' to wrap the word with '' or type cs'` to change 'word' to `word`
+
 "file integration
 Plug 'rbgrouleff/bclose.vim'
-Plug 'francoiscabrol/ranger.vim'
+Plug 'kevinhwang91/rnvimr', {'do': 'make sync'}
 Plug 'junegunn/fzf'
-"map tt :NERDTreeToggle<CR>
 
-"Plug 'iamcco/markdown-preview.vim'
-"Plug 'dhruvasagar/vim-table-mode', { 'for': 'markdown'}
+"for python 
+Plug 'Yggdroot/indentLine'     "缩进对齐辅助线
+Plug 'tell-k/vim-autopep8'
 "Plug 'davidhalter/jedi-vim'  "python自动补全
 Plug 'Vimjas/vim-python-pep8-indent', { 'for' :['python', 'vim-plug'] }
 "markdown
 Plug 'suan/vim-instant-markdown', {'for': 'markdown'}
 "Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install_sync() }, 'for' :['markdown', 'vim-plug'] }
 Plug 'dhruvasagar/vim-table-mode', { 'on': 'TableModeToggle' }
-Plug 'mzlogin/vim-markdown-toc', { 'for': ['gitignore', 'markdown', 'vim-plug'] }
+Plug 'mzlogin/vim-markdown-toc', { 'for': ['gitignore', 'markdown', 'vim-plug'] } "generate a catalog for md file
+
 Plug 'theniceboy/bullets.vim'
+" go 主要插件
+Plug 'fatih/vim-go', { 'tag': '*' }
+" go 中的代码追踪，输入 gd 就可以自动跳转
+Plug 'dgryski/vim-godef'
+"Plug 'suda.vim'    "error at launch
+" code format
+Plug 'junegunn/vim-easy-align'
+Plug 'voldikss/vim-floaterm'
+
 call plug#end()
 
 color deus
 let g:SnazzyTransparent = 1
-let g:mkdp_path_to_chrome = "chromium"
+"let g:mkdp_path_to_chrome = "chromium"
 let g:airline_theme='dracula'
-"nmap <M-f> :FZF . <Cr>
+let g:autopep8_disable_show_diff=1      "do not show diff and autochange format
+let g:autopep8_on_save = 1
+let g:instant_markdown_browser = "chromium --new-window"
 
-"===
-"===mapping
-"===
-nnoremap ; :
-map Q :q<CR>
-map R :source $MYVIMRC<CR>
-map <M-,> :vsplit<CR>
 
-nnoremap <silent> S 0
-nnoremap <silent> D $
-noremap <LEADER><CR> :nohlsearch<CR>
-map <LEADER>sc :set spell!<CR>
-map <LEADER>l <C-w>l
-map <LEADER>h <C-w>h
-map <LEADER>cx ! chmod +x %
-map <LEADER>rc :edit $MYVIMRC<CR>  
-map <LEADER>r :MarkdownPreview
-map <left> :vertical resize -5<CR>
-map <right> :vertical resize +5<CR>
-map to :tabe<CR>
-map th :-tabnext<CR>
-map tl :+tabnext<CR>
-nmap <space>e :CocCommand explorer<CR>
-"nnoremap <LEADER>y +Y
-" popup
-"""coc-translator
-nmap <Leader>t <Plug>(coc-translator-p)
-vmap <Leader>t <Plug>(coc-translator-pv)
 
 "open startify
-noremap <Leader>st :Startify<CR>
+"noremap <Leader>st :Startify<CR>
+
 "indent for python
-set shiftwidth=4 "indent width for each line 
-set tabstop=4 "设置tab显示宽度为4
-set expandtab
 autocmd FileType python set expandtab
+"easy aligin mapping
+"nmap ga <Plug>(EasyAlign)
+"xmap ga <Plug>(EasyAlign)
 
 function! s:isAtStartOfLine(mapping)
   let text_before_cursor = getline('.')[0 : col('.')-1]
@@ -140,22 +148,24 @@ filetype plugin on
 " ===
 " === vim-instant_markdown
 " ===
-let g:instant_markdown_slow = 1
+" ===
+" === vim-instant-markdown
+" ===
+let g:instant_markdown_slow = 0
 let g:instant_markdown_autostart = 0
-let g:instant_markdown_open_to_the_world = 1
-let g:instant_markdown_allow_unsafe_content = 1
-let g:instant_markdown_allow_external_content = 0
-let g:instant_markdown_mathjax = 1
-let g:instant_markdown_logfile = '/tmp/instant_markdown.log'
-let g:instant_markdown_autoscroll = 0
-let g:instant_markdown_port = 8888
-let g:instant_markdown_python = 1
+" let g:instant_markdown_open_to_the_world = 1
+" let g:instant_markdown_allow_unsafe_content = 1
+" let g:instant_markdown_allow_external_content = 0
+" let g:instant_markdown_mathjax = 1
+"let g:instant_markdown_autoscroll = 1
 
 " ===
 "===markdown keymap for insert mode
 " ===
+
 autocmd FileType markdown inoremap ,f <Esc>/<++><CR>:nohlsearch<CR>c4l
 autocmd FileType markdown inoremap ,b **** <++><Esc>F*hi
+autocmd FileType markdown inoremap ,c ```<CR><CR>```<Esc>ki 
 autocmd FileType markdown inoremap ,s ~~~~ <++><Esc>F~hi
 autocmd FileType markdown inoremap ,i ** <++><Esc>F*i
 autocmd FileType markdown inoremap ,p ![](<++>) <++><Esc>F[a
@@ -163,14 +173,42 @@ autocmd FileType markdown inoremap ,a [](<++>) <++><Esc>F[a
 autocmd FileType markdown inoremap ,n ---<Enter><Enter>
 
 
-set t_Co=256
 " Python Interpreter
 autocmd FileType python nnoremap <buffer> <C-i> :!python3 % <CR>
+" bash Interpreter
+"autocmd FileType bash nnoremap <buffer> <C-8> :!bash % <CR>
+autocmd FileType sh nnoremap <buffer> <C-i> :!%:p <CR>
+
 
 "===
 "===coc
 "===
-
+let g:coc_global_extensions = [
+	\ 'coc-actions',
+	\ 'coc-css',
+	\ 'coc-diagnostic',
+	\ 'coc-explorer',
+	\ 'coc-flutter-tools',
+	\ 'coc-gitignore',
+	\ 'coc-html',
+	\ 'coc-json',
+	\ 'coc-lists',
+	\ 'coc-prettier',
+	\ 'coc-pyright',
+	\ 'coc-python',
+	\ 'coc-snippets',
+	\ 'coc-sourcekit',
+	\ 'coc-stylelint',
+	\ 'coc-syntax',
+	\ 'coc-tasks',
+	\ 'coc-todolist',
+	\ 'coc-translator',
+	\ 'coc-tslint-plugin',
+	\ 'coc-tsserver',
+	\ 'coc-vimlsp',
+	\ 'coc-vetur',
+	\ 'coc-yaml',
+	\ 'coc-yank']
 " Use tab for trigger completion with characters ahead and navigate.
 " NOTE: Use command ':verbose imap <tab>' to make sure tab is not mapped by
 " other plugin before putting this into your config.
@@ -184,9 +222,9 @@ function! s:check_back_space() abort
   let col = col('.') - 1
   return !col || getline('.')[col - 1]  =~# '\s'
 endfunction
-
 " Use <c-space> to trigger completion.
-inoremap <silent><expr> <c-o> coc#refresh()
+inoremap <silent><expr> <c-m> coc#refresh()
+
 " Use <cr> to confirm completion, `<C-g>u` means break undo chain at current
 " position. Coc only does snippet and additional edit on confirm.
 " <cr> could be remapped by other vim plugin, try `:verbose imap <CR>`.
@@ -196,9 +234,57 @@ else
   inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
 endif
 
+" Compile function
+noremap <Leader>r :call CompileRunGcc()<CR>
+func! CompileRunGcc()
+	exec "w"
+	if &filetype == 'c'
+		exec "!g++ % -o %<"
+		exec "!time ./%<"
+	elseif &filetype == 'cpp'
+		set splitbelow
+		exec "!g++ -std=c++11 % -Wall -o %<"
+		:sp
+		:res -15
+		:term ./%<
+	elseif &filetype == 'java'
+		exec "!javac %"
+		exec "!time java %<"
+	elseif &filetype == 'sh'
+		:!time bash %
+	elseif &filetype == 'python'
+		set splitbelow
+		:sp
+		:term python3 %
+	elseif &filetype == 'html'
+		silent! exec "!".g:mkdp_browser." % &"
+	elseif &filetype == 'markdown'
+		exec "InstantMarkdownPreview"
+	elseif &filetype == 'tex'
+		silent! exec "VimtexStop"
+		silent! exec "VimtexCompile"
+	elseif &filetype == 'dart'
+		exec "CocCommand flutter.run -d ".g:flutter_default_device
+		silent! exec "CocCommand flutter.dev.openDevLog"
+	elseif &filetype == 'javascript'
+		set splitbelow
+		:sp
+		:term export DEBUG="INFO,ERROR,WARNING"; node --trace-warnings .
+	elseif &filetype == 'go'
+		set splitbelow
+		:sp
+		:term go run .
+	endif
+endfunc
+
 "====
 "==== quickly run
 "====
-"map <c-i> CompileRunGcc()<CR>
-"func! CompileRunGcc()
-    "exec "w"
+" 按 F5 执行当前 Python 代码"
+map <F5> :call PRUN()<CR>
+func! PRUN()
+    exec "w" 
+    if &filetype == 'python'
+        exec "!python3 %"
+    endif
+endfunc
