@@ -2,8 +2,8 @@ map R :source $MYVIMRC<CR>
 map <LEADER>rc :edit $MYVIMRC<CR>
 map <LEADER>cx !chmod +x %
 map to :tabe<CR>
-map th :-tabnext<CR>
-map tl :+tabnext<CR>
+map th :tabnext<CR>
+map tl :tabprevious<CR>
 noremap n nzz
 noremap N Nzz
 nmap <LEADER>f :FZF . <CR>
@@ -11,13 +11,15 @@ nmap <LEADER>f :FZF . <CR>
 ""===mapping
 ""===
 nnoremap ; :
+nnoremap <LEADER>n ;
+nnoremap <LEADER>b ,
 map Q :q<CR>
 map <M-,> :vsplit<CR>
 
 nnoremap <silent> S 0
 nnoremap <silent> D $
 noremap <LEADER><CR> :nohlsearch<CR>
-vnoremap Y:"+y 
+vnoremap Y "+y
 map <LEADER>sc :set spell!<CR>
 map <LEADER>l <C-w>l
 map <LEADER>h <C-w>h

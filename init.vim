@@ -21,114 +21,20 @@ set runtimepath^=~/.vim runtimepath+=~/.vim/after
 let mapleader=" "           "set the leader
 let &t_ut=''
 "colorscheme solarized
-"syntax on
-"syntax enable
-filetype on
-filetype indent on
-filetype plugin on
-filetype plugin indent on
 
-set notimeout
-set t_Co=256
-set nu
-se cul
-set autochdir
-set ruler
-set wrap
-set wildmenu
-set hidden    "this allow you jump to another file without save the curren buffer
-set relativenumber
-set hlsearch
-set incsearch
-set ignorecase
-set scrolloff=5
-set updatetime=100 "let your vim response faster"
-set fileencoding=utf-8
-set list
-set listchars=tab:\|\ ,trail:▫
-let &packpath = &runtimepath
-set mouse=a
-set noswapfile
-set shiftwidth=4 "auto indent width for new line 
-set tabstop=4 "设置tab显示宽度为4
-set expandtab
-
-
+source ~/.config/nvim/basic.vim
 source ~/.config/nvim/keymap.vim
-
-if has("autocmd")
-	    autocmd BufRead *.txt set tw=78
-	        autocmd BufReadPost *
-		    \ if line("'\"") > 0 && line ("'\"") <= line("$") |
-		    \   exe "normal g'\"" |
-		    \ endif
-	endif
-
-"install plugins via vim-plug
-call plug#begin('~/.config/nvim/plugged')
-"Plug 'jiangmiao/auto-pairs'
-Plug 'scrooloose/nerdtree'
-Plug 'mhinz/vim-startify'
-"status line && color
-Plug 'theniceboy/vim-deus'
-Plug 'vim-airline/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
-Plug 'dracula/vim'
-Plug 'mg979/vim-xtabline'           "a status line on top show current path
-Plug 'connorholyday/vim-snazzy'
-Plug 'scrooloose/nerdcommenter' " in <space>cn to comment a line
-Plug 'roxma/nvim-yarp'
-
-"Auto complete
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
-Plug 'tpope/vim-surround' " type yskw' to wrap the word with '' or type cs'` to change 'word' to `word`
-
-"file integration
-Plug 'rbgrouleff/bclose.vim'
-Plug 'kevinhwang91/rnvimr', {'do': 'make sync'}
-Plug 'junegunn/fzf'
-
-"for python 
-Plug 'Yggdroot/indentLine'     "缩进对齐辅助线
-Plug 'tell-k/vim-autopep8'
-"Plug 'davidhalter/jedi-vim'  "python自动补全
-Plug 'Vimjas/vim-python-pep8-indent', { 'for' :['python', 'vim-plug'] }
-"markdown
-Plug 'suan/vim-instant-markdown', {'for': 'markdown'}
-"Plug 'iamcco/markdown-preview.nvim', { 'do': { -> mkdp#util#install_sync() }, 'for' :['markdown', 'vim-plug'] }
-Plug 'dhruvasagar/vim-table-mode', { 'on': 'TableModeToggle' }
-Plug 'mzlogin/vim-markdown-toc', { 'for': ['gitignore', 'markdown', 'vim-plug'] } "generate a catalog for md file
-
-Plug 'theniceboy/bullets.vim'
-" go 主要插件
-Plug 'fatih/vim-go', { 'tag': '*' }
-" go 中的代码追踪，输入 gd 就可以自动跳转
-Plug 'dgryski/vim-godef'
-"Plug 'suda.vim'    "error at launch
-" code format
-Plug 'junegunn/vim-easy-align'
-Plug 'voldikss/vim-floaterm'
-
-call plug#end()
+source ~/.config/nvim/plugs.vim
 
 color deus
 let g:SnazzyTransparent = 1
-"let g:mkdp_path_to_chrome = "chromium"
 let g:airline_theme='dracula'
 let g:autopep8_disable_show_diff=1      "do not show diff and autochange format
 let g:autopep8_on_save = 1
 let g:instant_markdown_browser = "chromium --new-window"
 
-
-
-"open startify
-"noremap <Leader>st :Startify<CR>
-
 "indent for python
 autocmd FileType python set expandtab
-"easy aligin mapping
-"nmap ga <Plug>(EasyAlign)
-"xmap ga <Plug>(EasyAlign)
 
 function! s:isAtStartOfLine(mapping)
   let text_before_cursor = getline('.')[0 : col('.')-1]
@@ -145,9 +51,6 @@ inoreabbrev <expr> __
           \ '<c-o>:silent! TableModeDisable<cr>' : '__'
 
 filetype plugin on
-" ===
-" === vim-instant_markdown
-" ===
 " ===
 " === vim-instant-markdown
 " ===
@@ -176,8 +79,9 @@ autocmd FileType markdown inoremap ,n ---<Enter><Enter>
 " Python Interpreter
 autocmd FileType python nnoremap <buffer> <C-i> :!python3 % <CR>
 " bash Interpreter
-"autocmd FileType bash nnoremap <buffer> <C-8> :!bash % <CR>
-autocmd FileType sh nnoremap <buffer> <C-i> :!%:p <CR>
+autocmd FileType sh nnoremap <buffer> <C-i> :!bash % <CR>
+"autocmd FileType sh nnoremap <buffer> <C-i> :!%:p <CR>
+"autocmd VimEnter * edit $MYVIMRC
 
 
 "===
@@ -276,6 +180,7 @@ func! CompileRunGcc()
 		:term go run .
 	endif
 endfunc
+
 
 "====
 "==== quickly run
