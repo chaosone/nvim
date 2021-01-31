@@ -13,6 +13,7 @@ Plug 'mg979/vim-xtabline'           "a status line on top show current path
 Plug 'connorholyday/vim-snazzy'     "just a vim theme 
 Plug 'scrooloose/nerdcommenter' " in <space>cn to comment a line
 Plug 'roxma/nvim-yarp'
+Plug 'ryanoasis/vim-devicons'    "file devicons
 
 "Auto complete
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
@@ -44,5 +45,9 @@ Plug 'dgryski/vim-godef'
 " code format
 Plug 'junegunn/vim-easy-align'
 Plug 'voldikss/vim-floaterm'
+Plug 'gcmt/wildfire.vim'
+Plug 'mg979/vim-visual-multi' ,{'branch':'master'}
+Plug 'yianwillis/vimcdoc'
+Plug 'AndrewRadev/switch.vim'    "press gs to switch boolean variable between true/false
 
 call plug#end()

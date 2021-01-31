@@ -193,3 +193,5 @@ func! PRUN()
         exec "!python3 %"
     endif
 endfunc
+"
+"autocmd VimEnter * nested edit $MYVIMRC    # when vim run auto excute commands
